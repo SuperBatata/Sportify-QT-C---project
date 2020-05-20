@@ -1,0 +1,2 @@
+# Sportify-QT C++ project
+ 
