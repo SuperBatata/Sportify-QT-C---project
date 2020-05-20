@@ -1,4 +1,4 @@
-QT       += core gui
+QT += core gui
 QT += sql
 QT += network
 
@@ -39,14 +39,13 @@ FORMS += \
     mainwindow.ui
 
 
-QT += core gui
-QT +=sql
+
+
 QT +=core sql
 QT += printsupport
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-INCLUDEPATH += C:/openssl/openssl-1.0.2d-fips-2.0.10/include
 RESOURCES += \
     Qres.qrc

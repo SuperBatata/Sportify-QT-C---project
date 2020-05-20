@@ -51,19 +51,17 @@ private slots:
 
     void on_home_3_clicked();
 
-    void on_pushButton_2_clicked();
 
 
 
 
 
-    void on_loadview_clicked();
+  //  void on_loadview_clicked();
 
 
 
     void on_add_clicked();
 
-    void on_update_clicked();
 
     void on_delete_2_clicked();
 
@@ -84,6 +82,14 @@ private slots:
     void on_home_4_clicked();
 
     void on_report_clicked();
+
+    void on_add_stade_clicked();
+
+    void on_load_table_stade_clicked();
+
+    void on_delete_stade_clicked();
+
+    void on_pdf_2_clicked();
 
 private:
     Ui::home *ui;

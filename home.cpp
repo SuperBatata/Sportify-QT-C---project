@@ -63,55 +63,7 @@ void home::on_report_clicked()
  ui->stackedWidget->setCurrentIndex(3);
 }
 
-void home::on_pushButton_2_clicked()
-{ //add to database
-
-    int error=0;
-       QPalette *red = new QPalette();
-       QPalette *white = new QPalette();
-        red->setColor(QPalette::Base,Qt::red);
-         white->setColor(QPalette::Base,Qt::white);
-           if(ui->nom->text().isEmpty())
-       {     ui->nom->setPalette(*red) ; error=1;}
-           else {  ui->nom->setPalette(*white); }
-           if(ui->location->text().isEmpty())
-       {       ui->location->setPalette(*red)  ;error=1;}
-           else {  ui->location->setPalette(*white); }
-           if(ui->nbremployes->text().isEmpty())
-       {     ui->nbremployes->setPalette(*red );error=1;}
-           else {  ui->nbremployes->setPalette(*white); }
-
-    QString nom , localisation,nbemploye,capacite;
-
-
-           nom = ui -> nom ->text();
-           localisation = ui -> location ->text();
-           nbemploye = ui-> nbremployes ->text();
-           capacite = ui->capacite ->text();
-
-
-
-           QSqlQuery query;
-           if (!error)
-           query.prepare("INSERT INTO stades (NOM,LOCALISATION,NBEMPLOYE) values ('"+nom+"','"+localisation+"','"+nbemploye+"')");
-
-
-
-
-
-           if (query.exec()) {
-               //successful
-               QMessageBox :: information(this,"ajouter","success");
-
-           }
-           else {
-               // unsuccessful either no match or bad SQL
-                   QMessageBox::warning(this,"ajouter","error failed"),query.lastError().text();
-           }
-}
-
-
-
+/*
 
 void home::on_loadview_clicked()
 {
@@ -131,7 +83,7 @@ void home::on_loadview_clicked()
         m->setSourceModel(modal);
         ui->tableView->setModel(m);
         ui->tableView->setSortingEnabled(true);
-}
+}*/
 
 void home::on_add_clicked()
 {
@@ -163,7 +115,7 @@ void home::on_add_clicked()
 
 
 }
-
+/*
 void home::on_update_clicked()
 {
     QString nom , prenom , age,salaire,post;
@@ -193,7 +145,7 @@ void home::on_update_clicked()
     }
 
 }
-
+*/
 void home::on_delete_2_clicked()
 {
     QString nom , prenom , age,salaire,post;
@@ -367,3 +319,215 @@ void home::sendMail()
 
 
 
+
+void home::on_add_stade_clicked()
+{
+        int error=0;
+       QPalette *red = new QPalette();
+       QPalette *white = new QPalette();
+        red->setColor(QPalette::Base,Qt::red);
+         white->setColor(QPalette::Base,Qt::white);
+
+           if(ui->nom_stade->text().isEmpty())
+
+       {
+               ui->nom_stade->setPalette(*red) ; error=1;}
+
+           else {
+
+               ui->nom_stade->setPalette(*white); }
+
+           if(ui->adress_stade->text().isEmpty())
+       {       ui->adress_stade->setPalette(*red)  ;error=1;}
+           else {  ui->adress_stade->setPalette(*white); }
+           if(ui->nb_emp->text().isEmpty())
+       {     ui->nb_emp->setPalette(*red );error=1;}
+           else {  ui->nb_emp->setPalette(*white); }
+
+
+           if(ui->capacite_stade->text().isEmpty())
+
+       {
+               ui->capacite_stade->setPalette(*red) ; error=1;}
+
+           else {
+
+               ui->capacite_stade->setPalette(*white); }
+
+
+
+           if(ui->size->text().isEmpty())
+
+       {
+               ui->size->setPalette(*red) ; error=1;}
+
+           else {
+
+               ui->size->setPalette(*white); }
+
+
+
+
+
+    QString nom , localisation,nbemploye,capacite,F_size;
+
+
+           nom = ui -> nom_stade ->text();
+           localisation = ui -> adress_stade ->text();
+           nbemploye = ui-> nb_emp ->text();
+           capacite = ui-> capacite_stade ->text();
+           F_size = ui->size->text();
+
+
+           QSqlQuery query;
+           if (!error)
+           query.prepare("INSERT INTO stades (NOM,LOCALISATION,NBEMPLOYE,ADRESS,FIELD_SIZE) values ('"+nom+"','"+localisation+"','"+nbemploye+"','"+capacite+"','"+F_size+"')");
+
+
+
+
+
+           if (query.exec()) {
+               //successful
+               QMessageBox :: information(this,"ajouter","success");
+
+           }
+           else {
+               // unsuccessful either no match or bad SQL
+                   QMessageBox::warning(this,"ajouter","error failed"),query.lastError().text();
+           }
+
+}
+
+void home::on_load_table_stade_clicked()
+{
+    connexion conn;
+    //QSqlQueryModel * modal = new QSqlQueryModel();
+    conn.createconnect();
+   // QSqlQuery * qry = new QSqlQuery(conn.db);
+/*
+    qry -> prepare("select NOM  from EMPLOYES"); ,PRENOM,AGE,SALAIRE,POST
+    qry ->exec();
+    modal->setQuery(*qry);
+    ui->tableView_2->setModel(modal);
+   ui->comboBox->setModel(modal);
+
+    conn.closeconnect();
+    qDebug() << (modal->rowCount());
+
+   QSortFilterProxyModel *m=new QSortFilterProxyModel(this);
+    m->setDynamicSortFilter(true);
+
+    m->setSourceModel(modal);
+    ui->tableView_2->setModel(m);
+    ui->ta<bleView_2->setSortingEnabled(true);*/
+    modal = new QSqlTableModel(this);
+      modal->setTable("STADES");
+    //modal->setQuery("select NOM  from EMPLOYES");
+    modal ->select();
+
+    ui->tableView_3->setModel(modal);
+
+}
+
+void home::on_delete_stade_clicked()
+{
+    QString nom , localisation,nbemploye,capacite,F_size;
+
+
+           nom = ui -> nom_stade ->text();
+           localisation = ui -> adress_stade ->text();
+           nbemploye = ui-> nb_emp ->text();
+           capacite = ui-> capacite_stade ->text();
+           F_size = ui->size->text();
+
+    QSqlQuery query;
+
+    query.prepare("Delete from STADES where NOM='"+nom+"'");
+
+
+
+
+
+    if (query.exec()) {
+        //successful
+        QMessageBox :: information(this,"delete","success");
+
+    }
+    else {
+        // unsuccessful either no match or bad SQL
+            QMessageBox::warning(this,"delete","error failed"),query.lastError().text();
+    }
+}
+
+void home::on_pdf_2_clicked()
+{
+    QSqlDatabase db1;
+       QTableView table_stade;
+       QSqlQueryModel * Modal=new  QSqlQueryModel();
+
+       QSqlQuery qry;
+        qry.prepare("SELECT * FROM STADES");
+        qry.exec();
+        Modal->setQuery(qry);
+        table_stade.setModel(Modal);
+
+
+
+        db1.close();
+
+
+        QString strStream;
+        QTextStream out(&strStream);
+
+        const int rowCount = table_stade.model()->rowCount();
+        const int columnCount =  table_stade.model()->columnCount();
+
+        const QString strTitle ="Document";
+
+
+        out <<  "<html>\n"
+            "<head>\n"
+                "<meta Content=\"Text/html; charset=Windows-1251\">\n"
+            <<  QString("<title>%1</title>\n").arg(strTitle)
+            <<  "</head>\n"
+            "<body bgcolor=#ffffff link=#5000A0>\n"
+             << "<img src=\"../../../sportify.png\">\n"
+           << QString("<h3 style=\" font-size: 32px; font-family: Arial, Helvetica, sans-serif; color: green; font-weight: lighter; text-align: center;\">%1</h3>\n").arg("Tous les stades")
+           <<"<br>"
+            <<"<table border=1 cellspacing=0 cellpadding=2>\n";
+
+        out << "<thead><tr bgcolor=#f0f0f0>";
+        for (int column = 0; column < columnCount; column++)
+            if (!table_stade.isColumnHidden(column))
+                out << QString("<th>%1</th>").arg(table_stade.model()->headerData(column, Qt::Horizontal).toString());
+        out << "</tr></thead>\n";
+        for (int row = 0; row < rowCount; row++) {
+                out << "<tr>";
+                for (int column = 0; column < columnCount; column++) {
+                    if (!table_stade.isColumnHidden(column)) {
+                        QString data =table_stade.model()->data(table_stade.model()->index(row, column)).toString().simplified();
+                        out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                    }
+                }
+                out << "</tr>\n";
+            }
+            out <<  "</table>\n"
+                    "<br><br>"
+
+
+            "</body>\n"
+            "</html>\n";
+
+        QTextDocument *document = new QTextDocument();
+        document->setHtml(strStream);
+
+        QPrinter printer;
+
+        QPrintDialog *dialog = new QPrintDialog(&printer, NULL);
+        if (dialog->exec() == QDialog::Accepted) {
+            document->print(&printer);
+        }
+
+        delete document;
+}
